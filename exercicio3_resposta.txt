@@ -1,0 +1,22 @@
+Exercicio 3 - Qual o resultado em tela do programa?
+
+O programa chama ff(7). Vou rastrear as chamadas passo a passo:
+
+ff(7): 7 eh impar, entao retorna ff(3) + ff(4)
+
+  ff(3): 3 eh impar, retorna ff(1) + ff(2)
+    ff(1): retorna 1
+    ff(2): 2 eh par, retorna ff(1)
+      ff(1): retorna 1
+    ff(2) = 1
+  ff(3) = 1 + 1 = 2
+
+  ff(4): 4 eh par, retorna ff(2)
+    ff(2): 2 eh par, retorna ff(1)
+      ff(1): retorna 1
+    ff(2) = 1
+  ff(4) = 1
+
+ff(7) = ff(3) + ff(4) = 2 + 1 = 3
+
+Resultado impresso na tela: 3
