@@ -1,140 +1,101 @@
-/*
-    Exercicio 4 - Modelagem de classes para fabrica de automoveis
-    Heranca: Veiculo (classe base) -> CarroFlex, CarroDiesel, CarroEletrico
-    Cada tipo tem seu imposto e todos compartilham lucro de 25%.
-    Custo de venda = custo de producao + imposto + lucro
-    (imposto e lucro sao calculados sobre o custo de producao, sem sobreposicao)
-*/
-
 #include <iostream>
 #include <string>
 using namespace std;
 
 class Veiculo {
 protected:
-    string numeroChassi;
-    string numeroMotor;
+    string chassi;
+    string motor;
     double custoProducao;
-    double taxaImposto;
-
+    double imposto; // percentual do imposto (ex: 0.20 = 20%)
 public:
-    Veiculo(string chassi, string motor, double custo, double imposto)
-        : numeroChassi(chassi), numeroMotor(motor), custoProducao(custo), taxaImposto(imposto) {}
+    Veiculo(string ch, string mt, double custo, double imp){
+        chassi = ch;
+        motor = mt;
+        custoProducao = custo;
+        imposto = imp;
+    }
 
-    double calcularCustoVenda() {
-        double imposto = custoProducao * taxaImposto;
+    double custoVenda(){
+        // imposto e lucro sao sobre o custo de producao, nao sobrepostos
+        double valorImposto = custoProducao * imposto;
         double lucro = custoProducao * 0.25;
-        return custoProducao + imposto + lucro;
+        return custoProducao + valorImposto + lucro;
     }
 
-    void exibirCustoVenda() {
-        cout << "Chassi: " << numeroChassi << endl;
-        cout << "Motor: " << numeroMotor << endl;
-        cout << "Custo de producao: R$ " << custoProducao << endl;
-        cout << "Imposto (" << (taxaImposto * 100) << "%): R$ " << (custoProducao * taxaImposto) << endl;
-        cout << "Lucro (25%): R$ " << (custoProducao * 0.25) << endl;
-        cout << "Custo de venda: R$ " << calcularCustoVenda() << endl;
+    void mostrarInfo(){
+        cout << "Chassi: " << chassi << endl;
+        cout << "Motor: " << motor << endl;
+        cout << "Custo producao: R$" << custoProducao << endl;
+        cout << "Custo venda: R$" << custoVenda() << endl;
     }
 };
 
+// carro flex - imposto 20%
 class CarroFlex : public Veiculo {
-private:
-    int numeroPortas;
+    int portas;
     double cilindrada;
-
 public:
-    CarroFlex(string chassi, string motor, int portas, double cil, double custo)
-        : Veiculo(chassi, motor, custo, 0.20), numeroPortas(portas), cilindrada(cil) {}
+    CarroFlex(string ch, string mt, int p, double cil, double custo)
+        : Veiculo(ch, mt, custo, 0.20){
+        portas = p;
+        cilindrada = cil;
+    }
 
-    void exibir() {
-        cout << "--- Carro Flex ---" << endl;
-        cout << "Portas: " << numeroPortas << endl;
-        cout << "Cilindrada: " << cilindrada << endl;
-        exibirCustoVenda();
+    void mostrar(){
+        cout << "=== Carro Flex ===" << endl;
+        cout << "Portas: " << portas << " | Cilindrada: " << cilindrada << endl;
+        mostrarInfo();
         cout << endl;
     }
 };
 
+// carro diesel - imposto 30% (20% base + 10% por poluicao)
 class CarroDiesel : public Veiculo {
-private:
-    double capacidadeCarga;
-    double volumeCacamba;
-
+    double capCarga;
+    double volCacamba;
 public:
-    CarroDiesel(string chassi, string motor, double carga, double cacamba, double custo)
-        : Veiculo(chassi, motor, custo, 0.30), capacidadeCarga(carga), volumeCacamba(cacamba) {}
+    CarroDiesel(string ch, string mt, double carga, double cacamba, double custo)
+        : Veiculo(ch, mt, custo, 0.30){
+        capCarga = carga;
+        volCacamba = cacamba;
+    }
 
-    void exibir() {
-        cout << "--- Carro Diesel ---" << endl;
-        cout << "Capacidade de carga: " << capacidadeCarga << " kg" << endl;
-        cout << "Volume da cacamba: " << volumeCacamba << " litros" << endl;
-        exibirCustoVenda();
+    void mostrar(){
+        cout << "=== Carro Diesel ===" << endl;
+        cout << "Carga: " << capCarga << "kg | Cacamba: " << volCacamba << "L" << endl;
+        mostrarInfo();
         cout << endl;
     }
 };
 
+// carro eletrico - imposto 10% (20% base - 10% incentivo)
 class CarroEletrico : public Veiculo {
-private:
     double potencia;
-    double duracaoBateria;
-
+    double duracaoBat;
 public:
-    CarroEletrico(string chassi, string motor, double pot, double bateria, double custo)
-        : Veiculo(chassi, motor, custo, 0.10), potencia(pot), duracaoBateria(bateria) {}
+    CarroEletrico(string ch, string mt, double pot, double bat, double custo)
+        : Veiculo(ch, mt, custo, 0.10){
+        potencia = pot;
+        duracaoBat = bat;
+    }
 
-    void exibir() {
-        cout << "--- Carro Eletrico ---" << endl;
-        cout << "Potencia: " << potencia << " cv" << endl;
-        cout << "Duracao da bateria: " << duracaoBateria << " horas" << endl;
-        exibirCustoVenda();
+    void mostrar(){
+        cout << "=== Carro Eletrico ===" << endl;
+        cout << "Potencia: " << potencia << "cv | Bateria: " << duracaoBat << "h" << endl;
+        mostrarInfo();
         cout << endl;
     }
 };
 
-int main() {
-    // Exemplos de uso com valores simulados
+int main(){
+    CarroFlex f1("CH001", "MT001", 4, 1.6, 50000);
+    CarroDiesel d1("CH002", "MT002", 1200, 500, 80000);
+    CarroEletrico e1("CH003", "MT003", 200, 12, 120000);
 
-    CarroFlex flex("CH-001", "MT-001", 4, 1.6, 50000.00);
-    CarroDiesel diesel("CH-002", "MT-002", 1200.0, 500.0, 80000.00);
-    CarroEletrico eletrico("CH-003", "MT-003", 200.0, 12.0, 120000.00);
-
-    flex.exibir();
-    diesel.exibir();
-    eletrico.exibir();
+    f1.mostrar();
+    d1.mostrar();
+    e1.mostrar();
 
     return 0;
 }
-
-/*
-    Exemplo de saida:
-
-    --- Carro Flex ---
-    Portas: 4
-    Cilindrada: 1.6
-    Chassi: CH-001
-    Motor: MT-001
-    Custo de producao: R$ 50000
-    Imposto (20%): R$ 10000
-    Lucro (25%): R$ 12500
-    Custo de venda: R$ 72500
-
-    --- Carro Diesel ---
-    Capacidade de carga: 1200 kg
-    Volume da cacamba: 500 litros
-    Chassi: CH-002
-    Motor: MT-002
-    Custo de producao: R$ 80000
-    Imposto (30%): R$ 24000
-    Lucro (25%): R$ 20000
-    Custo de venda: R$ 124000
-
-    --- Carro Eletrico ---
-    Potencia: 200 cv
-    Duracao da bateria: 12 horas
-    Chassi: CH-003
-    Motor: MT-003
-    Custo de producao: R$ 120000
-    Imposto (10%): R$ 12000
-    Lucro (25%): R$ 30000
-    Custo de venda: R$ 162000
-*/

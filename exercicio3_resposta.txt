@@ -1,22 +1,18 @@
-Exercicio 3 - Qual o resultado em tela do programa?
+Exercicio 3
 
-O programa chama ff(7). Vou rastrear as chamadas passo a passo:
+Fui rastreando as chamadas na mao pra chegar no resultado.
 
-ff(7): 7 eh impar, entao retorna ff(3) + ff(4)
+ff(7) -> 7 é impar, cai no terceiro caso: ff(3) + ff(4)
 
-  ff(3): 3 eh impar, retorna ff(1) + ff(2)
-    ff(1): retorna 1
-    ff(2): 2 eh par, retorna ff(1)
-      ff(1): retorna 1
-    ff(2) = 1
-  ff(3) = 1 + 1 = 2
+ff(3) -> impar tambem: ff(1) + ff(2)
+  ff(1) = 1  (caso base)
+  ff(2) -> par, chama ff(1) = 1
+  entao ff(3) = 1 + 1 = 2
 
-  ff(4): 4 eh par, retorna ff(2)
-    ff(2): 2 eh par, retorna ff(1)
-      ff(1): retorna 1
-    ff(2) = 1
-  ff(4) = 1
+ff(4) -> par, chama ff(2)
+  ff(2) -> par de novo, chama ff(1) = 1
+  entao ff(4) = 1
 
-ff(7) = ff(3) + ff(4) = 2 + 1 = 3
+voltando: ff(7) = 2 + 1 = 3
 
-Resultado impresso na tela: 3
+Resposta: o programa imprime 3

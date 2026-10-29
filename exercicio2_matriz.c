@@ -1,62 +1,45 @@
-/*
-    Exercicio 2 - Funcao que recebe uma matriz, conta pares e impares,
-    e retorna a quantidade do que tiver mais ocorrencias.
-*/
-
 #include <stdio.h>
 
-int contarMaior(int matriz[][100], int linhas, int colunas) {
-    int pares = 0;
-    int impares = 0;
+#define MAX 100
 
-    for (int i = 0; i < linhas; i++) {
-        for (int j = 0; j < colunas; j++) {
-            if (matriz[i][j] % 2 == 0)
+// conta pares e impares e retorna a qtd maior
+int contaMaiorOcorrencia(int mat[][MAX], int lin, int col){
+    int pares = 0, impares = 0;
+    int i, j;
+
+    for(i = 0; i < lin; i++){
+        for(j = 0; j < col; j++){
+            if(mat[i][j] % 2 == 0)
                 pares++;
             else
                 impares++;
         }
     }
 
-    if (pares >= impares)
+    if(pares > impares)
         return pares;
     else
         return impares;
 }
 
-int main() {
-    int linhas, colunas;
+int main(){
+    int mat[MAX][MAX];
+    int lin, col, i, j, resp;
 
-    printf("Quantas linhas tem a matriz? ");
-    scanf("%d", &linhas);
-    printf("Quantas colunas? ");
-    scanf("%d", &colunas);
+    printf("Linhas: ");
+    scanf("%d", &lin);
+    printf("Colunas: ");
+    scanf("%d", &col);
 
-    int matriz[100][100];
-
-    printf("Digite os valores da matriz:\n");
-    for (int i = 0; i < linhas; i++) {
-        for (int j = 0; j < colunas; j++) {
-            printf("  [%d][%d]: ", i, j);
-            scanf("%d", &matriz[i][j]);
+    for(i = 0; i < lin; i++){
+        for(j = 0; j < col; j++){
+            printf("[%d][%d] = ", i, j);
+            scanf("%d", &mat[i][j]);
         }
     }
 
-    int resultado = contarMaior(matriz, linhas, colunas);
-    printf("\nA maior quantidade de ocorrencias (pares ou impares) eh: %d\n", resultado);
+    resp = contaMaiorOcorrencia(mat, lin, col);
+    printf("Maior ocorrencia (par ou impar): %d\n", resp);
 
     return 0;
 }
-
-/*
-    Exemplo de execucao:
-
-    Matriz 3x3:
-    | 2  5  8 |
-    | 3  4  7 |
-    | 6  1  9 |
-
-    Pares: 2, 8, 4, 6 -> 4 numeros
-    Impares: 5, 3, 7, 1, 9 -> 5 numeros
-    Resultado: 5 (impares tem mais ocorrencias)
-*/

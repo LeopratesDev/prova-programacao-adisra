@@ -1,52 +1,33 @@
-/*
-    Exercicio 1 - Sequencia de Fibonacci
-    O usuario digita uma posicao e o programa retorna
-    o numero de Fibonacci correspondente.
-    Exemplo: posicao 6 -> resultado 8 (0,1,1,2,3,5,8)
-*/
-
 #include <stdio.h>
 
-int fibonacci(int posicao) {
-    if (posicao == 0) return 0;
-    if (posicao == 1) return 1;
+// funcao pra calcular fibonacci na posicao que o usuario pedir
+int fibonacci(int pos){
+    int a = 0, b = 1, temp, i;
 
-    int anterior = 0;
-    int atual = 1;
-    int proximo;
+    if(pos == 0) return 0;
+    if(pos == 1) return 1;
 
-    for (int i = 2; i <= posicao; i++) {
-        proximo = anterior + atual;
-        anterior = atual;
-        atual = proximo;
+    for(i = 2; i <= pos; i++){
+        temp = a + b;
+        a = b;
+        b = temp;
     }
-
-    return atual;
+    return b;
 }
 
-int main() {
-    int posicao;
+int main(){
+    int n, resultado;
 
-    printf("Digite a posicao desejada na sequencia de Fibonacci: ");
-    scanf("%d", &posicao);
+    printf("Informe a posicao: ");
+    scanf("%d", &n);
 
-    if (posicao < 0) {
-        printf("Erro: a posicao deve ser um numero positivo.\n");
+    if(n < 0){
+        printf("Posicao invalida!\n");
         return 1;
     }
 
-    int resultado = fibonacci(posicao);
-    printf("O numero na posicao %d da sequencia de Fibonacci eh: %d\n", posicao, resultado);
+    resultado = fibonacci(n);
+    printf("Fibonacci na posicao %d = %d\n", n, resultado);
 
     return 0;
 }
-
-/*
-    Exemplo de execucao:
-
-    Digite a posicao desejada na sequencia de Fibonacci: 6
-    O numero na posicao 6 da sequencia de Fibonacci eh: 8
-
-    Sequencia: 0, 1, 1, 2, 3, 5, 8
-    Posicao:   0  1  2  3  4  5  6
-*/
